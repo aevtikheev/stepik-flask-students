@@ -3,8 +3,8 @@ from setuptools import setup
 
 
 def _get_required_packages():
-    with open('requirements.txt') as f:
-        required = f.read().splitlines()
+    with open('requirements.txt') as reqs_file:
+        required = reqs_file.read().splitlines()
     return required
 
 

@@ -9,10 +9,6 @@ app = Flask(__name__)
 app.config.from_object(config.Config)
 models.db.init_app(app)
 
-with app.app_context():
-    models.db.create_all()
-
-
 admin = Admin(app)
 admin.add_view(admin_views.UserView(models.User, models.db.session))
 admin.add_view(admin_views.GroupView(models.Group, models.db.session))

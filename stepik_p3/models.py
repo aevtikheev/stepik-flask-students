@@ -1,5 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
 import enum
+
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
@@ -29,20 +30,26 @@ class ApplicantStatus(enum.Enum):
 class Applicant(db.Model):
     __tablename__ = 'applicants'
     id = db.Column(db.Integer, primary_key=True, )
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     phone = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=False)
     group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
     group = db.relationship('Group')
-    status = db.Column(db.Enum(ApplicantStatus), nullable=False)
+    status = db.Column(db.Enum(ApplicantStatus,
+                               values_callable=lambda x: [e.value for e in x]),
+                       nullable=False)
 
 
 class Group(db.Model):
     __tablename__ = 'groups'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
-    status = db.Column(db.Enum(GroupStatus), nullable=False)
-    course = db.Column(db.Enum(CourseType), nullable=False)
+    title = db.Column(db.String, nullable=False, unique=True)
+    status = db.Column(db.Enum(GroupStatus,
+                               values_callable=lambda x: [e.value for e in x]),
+                       nullable=False)
+    course = db.Column(db.Enum(CourseType,
+                               values_callable=lambda x: [e.value for e in x]),
+                       nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     applpicants = db.relationship('Applicant')
 
@@ -50,6 +57,6 @@ class Group(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
