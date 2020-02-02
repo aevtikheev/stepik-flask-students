@@ -1,10 +1,10 @@
-from functools import wraps
+import threading
 
-from flask import abort, flash, session, redirect, request, render_template
+from flask import render_template, request
+from flask_mail import Mail, Message
 
 from stepik_p3.app import app
-from stepik_p3.models import User
-from stepik_p3.forms import LoginForm, RegistrationForm, ChangePasswordForm
+from stepik_p3 import forms
 
 
 def login_required(f):
@@ -16,30 +16,35 @@ def admin_only(f):
 
 
 @app.route('/')
-@login_required
-def home():
+def home_page():
     return None
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    return None
+@app.route('/mail')
+def mail_page():
+    mail_form = forms.MailForm()
+    return render_template("mail_edit.html", mail_form=mail_form)
 
 
-@app.route('/logout', methods=["POST"])
-@login_required
-def logout():
-    return None
+@app.route('/mail_sent', methods=['POST'])
+def mail_sent_page():
+    recepient = request.form.get('recepient')
+    subject = request.form.get('topic')
+    text = request.form.get('text')
 
+    mail = Mail(app)
+    sender = "user_from@example.com"
+    msg = Message(
+        subject,
+        sender=sender,
+        recipients=[recepient]
+    )
+    msg.body = text
 
-@app.route("/register", methods=["GET", "POST"])
-@admin_only
-@login_required
-def register():
-    return None
+    send_mail_thread = threading.Thread(target=mail.send(msg))
+    send_mail_thread.start()
 
-
-@app.route("/change-password", methods=["GET", "POST"])
-@login_required
-def change_password():
-    return None
+    return render_template("mail_sent.html",
+                           recepient=recepient,
+                           subject=subject,
+                           text=text)

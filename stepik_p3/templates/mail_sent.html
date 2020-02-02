@@ -7,41 +7,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-
     <div class="container" style="margin-top:50px">
-
         <div class="row">
-
             <div class="col-md-6">
-
+                <a href="/">Назад</a>
                 <h3>Отправить письмо</h3>
-
                 <br>
-
+                <p class="alert alert-success">Письмо отправлено</p>
+                <br>
                 <form action="" method="POST"></form>
-
-                <p>Кому: </p>
-
-                <input type="text" class="form-control">
-
+                <p>Кому: {{ recepient }}</p>
                 <br>
-
-                <p>Тема:</p>
-
-                <input type="text" class="form-control">
-
+                <p>Тема: {{ subject }}</p>
                 <br>
-
                 <p>Текст письма:</p>
-
-                <textarea name=""  class="form-control"></textarea>
-
+                <p>{{ text }}</p>
                 <br>
-
-                <input type="submit" class="btn btn-primary" value = "Отправить"/>
-
+                <a href="/" class="btn btn-primary" "/>Вернуться</a>
             </div>
         </div>
-
     </div>
 </body>

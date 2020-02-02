@@ -16,5 +16,7 @@ admin.add_view(admin_views.UserView(models.User, models.db.session))
 admin.add_view(admin_views.GroupView(models.Group, models.db.session))
 admin.add_view(admin_views.ApplicantsView(models.Applicant, models.db.session))
 
+from stepik_p3.views import *  # TODO use blueprints
+
 if __name__ == '__main__':
     app.run()

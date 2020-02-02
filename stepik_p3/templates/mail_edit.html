@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stepik CRM</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="margin-top:50px">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Отправить письмо</h3>
+                <br>
+                <form action="/mail_sent" method="POST">
+                    {{ mail_form.csrf_token }}
+                    <p>{{ mail_form.recepient.label }}</p>
+                    {{ mail_form.recepient(class="form-control") }}
+                    <br>
+                    <p>{{ mail_form.subject.label }}</p>
+                    {{ mail_form.subject(class="form-control") }}
+                    <br>
+                    <p>{{ mail_form.text.label }}</p>
+                    {{ mail_form.text(class="form-control") }}
+                    <br>
+                    <input type="submit" class="btn btn-primary" value = "Отправить"/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
