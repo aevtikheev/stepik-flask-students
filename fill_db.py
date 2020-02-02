@@ -22,11 +22,12 @@ logger.setLevel(logging.INFO)
 def _create_users(amount):
     fake = faker.Faker()
     for _ in range(amount):
+        password = fake.word()
         user = models.User(email=fake.email(),
                            name=fake.name(),
-                           password=fake.word())
+                           password=password)
         models.db.session.add(user)
-        logger.info(f'New user {user.name}:{user.password}')
+        logger.info(f'New user {user.name}:{password}')
     models.db.session.commit()
     return [user.id for user in models.db.session.query(models.User).all()]
 
