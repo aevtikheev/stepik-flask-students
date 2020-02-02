@@ -1,0 +1,41 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<div class="container" style="margin-top:50px">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Заявки</h2>
+                <p>{{ total_applicants_count }} всего,
+                    {{ total_applicants_count - new_applicants_count }} распределены,
+                    {{ new_applicants_count }} не распределены</p>
+                <h3>Новые заявки</h3>
+                <table class="table">
+                    {% for new_applicant in new_applicants %}
+                    <tr>
+                        <td><a href="/admin/applicant/edit/?id={{ new_applicant.id }}">{{ new_applicant.name }}</a></td>
+                        <td>{{ new_applicant.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br>
+                <a href="" class></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Группы</h2>
+                <br>
+                <table class="table">
+                {% for group in groups %}
+                    <tr>
+                        <td><a href="/admin/group/edit/?id={{ group.id }}">{{ group.title }}</a></td>
+                        <td>{{ group.applicants|length }} / {{ max_group_size }} набрано</td>
+                        <td>{{ group.status.value }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

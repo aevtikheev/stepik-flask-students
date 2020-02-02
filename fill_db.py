@@ -34,12 +34,12 @@ def _create_users(amount):
 def _create_groups(amount):
     fake = faker.Faker()
     for _ in range(amount):
+        course = random.choice([course.value for course in models.CourseType])
         group = models.Group(
-            title=fake.word(),
+            title=f'{course} {random.randint(1, 1000)}',
             status=random.choice(
                 [status.value for status in models.GroupStatus]),
-            course=random.choice(
-                [course.value for course in models.CourseType]),
+            course=course,
             start_date=fake.date_this_year()
         )
         models.db.session.add(group)
