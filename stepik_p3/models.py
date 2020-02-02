@@ -1,6 +1,7 @@
 import enum
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils.types.password import PasswordType
 
 MAX_GROUP_SIZE = 10
 
@@ -64,4 +65,5 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True)
     name = db.Column(db.String, nullable=False)
-    password = db.Column(db.String, nullable=False)
+    password = db.Column(PasswordType(schemes=['pbkdf2_sha512']),
+                         nullable=False)

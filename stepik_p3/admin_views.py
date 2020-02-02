@@ -1,5 +1,3 @@
-import hashlib
-
 from flask_admin.contrib import sqla
 from flask_admin import AdminIndexView, expose
 
@@ -11,10 +9,6 @@ GROUPS_SHOW_AMOUNT = 10
 
 class UserView(sqla.ModelView):
     """ Model view for users """
-    def on_model_change(self, form, model, is_created):
-        model.password = hashlib.md5(
-            model.password.encode('utf-8')
-        ).hexdigest()
 
 
 class GroupView(sqla.ModelView):
