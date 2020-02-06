@@ -29,7 +29,7 @@
                 {% for group in groups %}
                     <tr>
                         <td><a href="/admin/group/edit/?id={{ group.id }}">{{ group.title }}</a></td>
-                        <td>{{ group.applicants|length }} / {{ max_group_size }} набрано</td>
+                        <td>{{ group.applicants|length }} / {{ group.max_size }} набрано</td>
                         <td>{{ group.status.value }}</td>
                     </tr>
                 {% endfor %}

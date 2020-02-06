@@ -41,7 +41,8 @@ def _create_groups(amount):
             status=random.choice(
                 [status.value for status in models.GroupStatus]),
             course=course,
-            start_date=fake.date_this_year()
+            start_date=fake.date_this_year(),
+            max_size=10
         )
         models.db.session.add(group)
         logger.info(f'New group {group.title}')

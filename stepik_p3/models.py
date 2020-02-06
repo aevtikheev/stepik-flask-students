@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from sqlalchemy_utils.types.password import PasswordType
 
-MAX_GROUP_SIZE = 10
-
 db = SQLAlchemy()
 
 
@@ -62,6 +60,7 @@ class Group(db.Model):
         nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     applicants = db.relationship('Applicant')
+    max_size = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return self.title

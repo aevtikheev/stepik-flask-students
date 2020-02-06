@@ -27,8 +27,8 @@ class ProtectedModelView(sqla.ModelView):
 
 class UserModelView(ProtectedModelView):
     """ Model view for users """
-    searchable_columns = ('name', 'email')
-    excluded_list_columns = ['password']
+    column_searchable_list = ('name', 'email')
+    column_exclude_list = ['password']
     form_overrides = dict(password=PasswordField)
 
 
@@ -64,8 +64,7 @@ class DashboardView(AdminIndexView):
                            total_applicants_count=total_applicants_count,
                            new_applicants_count=new_applicants_count,
                            new_applicants=new_applicants_to_show,
-                           groups=groups,
-                           max_group_size=models.MAX_GROUP_SIZE)
+                           groups=groups)
 
     def is_accessible(self):
         return current_user.is_authenticated
