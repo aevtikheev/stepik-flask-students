@@ -39,7 +39,7 @@ def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login_page'))
     else:
-        return 'Welcome!'
+        return redirect(url_for('admin.index'))
 
 
 @app.route('/mail')

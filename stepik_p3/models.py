@@ -44,6 +44,9 @@ class Applicant(db.Model):
                 values_callable=lambda x: [e.value for e in x]),
         nullable=False)
 
+    def __repr__(self):
+        return self.email
+
 
 class Group(db.Model):
     __tablename__ = 'groups'
@@ -60,6 +63,9 @@ class Group(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     applicants = db.relationship('Applicant')
 
+    def __repr__(self):
+        return self.title
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -68,3 +74,6 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     password = db.Column(PasswordType(schemes=['pbkdf2_sha512']),
                          nullable=False)
+
+    def __repr__(self):
+        return self.email

@@ -11,7 +11,7 @@ GROUPS_SHOW_AMOUNT = 10
 
 
 class ProtectedView(sqla.ModelView):
-    """ Model view for users """
+    """ Base Model view for authorization-requiring pages """
 
     def is_accessible(self):
         return current_user.is_authenticated
@@ -29,6 +29,7 @@ class UserView(ProtectedView):
 
 class GroupView(ProtectedView):
     """ Model view for groups """
+    column_formatters = dict(course=lambda v, c, m, p: m.course.value)
 
 
 class ApplicantsView(ProtectedView):
