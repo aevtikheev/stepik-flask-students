@@ -10,13 +10,17 @@ models.db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+admin_views.mail.init_app(app)
 
 admin = Admin(app,
               template_mode='bootstrap3',
               index_view=admin_views.DashboardView())
-admin.add_view(admin_views.UserView(models.User, models.db.session))
-admin.add_view(admin_views.GroupView(models.Group, models.db.session))
-admin.add_view(admin_views.ApplicantsView(models.Applicant, models.db.session))
+admin.add_view(admin_views.UserModelView(models.User, models.db.session))
+admin.add_view(admin_views.GroupModelView(models.Group, models.db.session))
+admin.add_view(admin_views.ApplicantsModelView(models.Applicant,
+                                               models.db.session))
+admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='/mail'))
+
 
 from stepik_p3.views import *  # TODO use blueprints
 

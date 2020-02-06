@@ -1,11 +1,17 @@
 from setuptools import find_packages
 from setuptools import setup
 
+try:
+    # for pip >= 10
+    from pip._internal.req import parse_requirements
+except ImportError:
+    # for pip <= 9.0.3
+    from pip.req import parse_requirements
 
-def _get_required_packages():
-    with open('requirements.txt') as reqs_file:
-        required = reqs_file.read().splitlines()
-    return required
+
+def load_requirements(fname):
+    reqs = parse_requirements(fname, session="test")
+    return [str(ir.req) for ir in reqs]
 
 
 setup(
@@ -13,6 +19,6 @@ setup(
     version="0.0.1",
     description="Stepik flask project 3",
     packages=find_packages(),
-    install_requires=_get_required_packages(),
+    install_requires=load_requirements('requirements.txt'),
     include_package_data=True
 )

@@ -8,3 +8,4 @@ flask-admin~=1.5.4
 Flask-Mail~=0.9.1
 flask-login~=0.4.1
 sqlalchemy-utils~=0.36.1
+passlib~=1.7.2
