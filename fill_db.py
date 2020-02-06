@@ -27,7 +27,7 @@ def _create_users(amount):
                            name=fake.name(),
                            password=password)
         models.db.session.add(user)
-        logger.info(f'New user {user.name}:{password}')
+        logger.info(f'New user {user.email}:{password}')
     models.db.session.commit()
     return [user.id for user in models.db.session.query(models.User).all()]
 

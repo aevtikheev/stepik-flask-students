@@ -1,23 +1,45 @@
 import threading
 
-from flask import render_template, request
+from flask import render_template, request, redirect, flash, url_for
 from flask_mail import Mail, Message
+from flask_login import current_user, login_user, logout_user
 
-from stepik_p3.app import app
-from stepik_p3 import forms
-
-
-def login_required(f):
-    return None
+from stepik_p3.app import app, login_manager
+from stepik_p3 import forms, models
 
 
-def admin_only(f):
-    return None
+@login_manager.user_loader
+def load_user(user_id):
+    return models.User.query.get(int(user_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    login_form = forms.LoginForm()
+    if login_form.validate_on_submit():
+        user = models.User.query.filter_by(email=login_form.email.data).first()
+        if user is None or user.password != login_form.password.data:
+            flash('Invalid email or password')
+            return redirect(url_for('login_page'))
+        login_user(user)
+        return redirect(url_for('admin.index'))
+    return render_template('auth.html', login_form=login_form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.route('/')
-def home_page():
-    return None
+def index():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login_page'))
+    else:
+        return 'Welcome!'
 
 
 @app.route('/mail')

@@ -1,13 +1,15 @@
 from flask import Flask
 from flask_admin import Admin
+from flask_login import LoginManager
 
-from stepik_p3 import models
-from stepik_p3 import config
-from stepik_p3 import admin_views
+from stepik_p3 import models, config, admin_views
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
 models.db.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 admin = Admin(app,
               template_mode='bootstrap3',

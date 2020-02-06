@@ -13,5 +13,6 @@ setup(
     version="0.0.1",
     description="Stepik flask project 3",
     packages=find_packages(),
-    install_requires=_get_required_packages()
+    install_requires=_get_required_packages(),
+    include_package_data=True
 )

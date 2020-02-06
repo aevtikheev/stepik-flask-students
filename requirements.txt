@@ -1,8 +1,9 @@
+werkzeug~=0.16.1
 flask~=1.1.1
 gunicorn~=20.0.4
 flask_sqlalchemy~=2.4.1
 flask_wtf~=0.14.2
 wtforms~=2.2.1
 flask-admin~=1.5.4
-sqlalchemy-utils~=0.36.1
 Flask-Mail~=0.9.1
+flask-login~=0.4.1

@@ -1,0 +1,2 @@
+recursive-include stepik_p3/templates *
+recursive-include stepik_p3/static *

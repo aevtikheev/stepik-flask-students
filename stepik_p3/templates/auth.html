@@ -11,26 +11,34 @@
   <main class="container">
     <div class="row">
       <div class="col-8 col-lg-4 offset-2 offset-lg-4">
-        <form class="form-signin pt-5 mt-5">
+        <form class="form-signin pt-5 mt-5" action="/login" method="post">
+            {{ login_form.csrf_token }}
           <div class="text-center m-6 b-1">
             <h1 class="h3 mb-3 font-weight-normal">Stepik CRM</h1>
             <p class="mb-4">Что-то мы вас не узнали</p>
           </div>
-
-          <p class="alert alert-danger text-center">Неверный логин или пароль</p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger text-center">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
           <div class="form-label-group">
             <p class="text-muted">Электропочта</p>
-            <input type="email" id="inputEmail" class="form-control" required autofocus>
-            <label for="inputEmail"></label>
+            {{ login_form.email(class="form-control") }}
           </div>
           <div class="form-label-group">
             <p class="text-muted">Пароль</p>
-            <input type="password" id="inputPassword" class="form-control" required>
-            <label for="inputPassword"></label>
+            {{ login_form.password(class="form-control") }}
           </div>
           <div class="checkbox mb-3"> </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+          {{ login_form.submit(class="btn btn-lg btn-primary btn-block") }}
+
+            {% if login_form.errors %}
+            {{ login_form.errors }}
+            {% endif %}
         </form>
       </div>
     </div>

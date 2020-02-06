@@ -1,6 +1,7 @@
 import enum
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from sqlalchemy_utils.types.password import PasswordType
 
 MAX_GROUP_SIZE = 10
@@ -60,7 +61,7 @@ class Group(db.Model):
     applicants = db.relationship('Applicant')
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True)
