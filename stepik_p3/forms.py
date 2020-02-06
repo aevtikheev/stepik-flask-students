@@ -3,11 +3,12 @@ from wtforms import (StringField,
                      TextAreaField,
                      PasswordField,
                      SubmitField,
+                     SelectField,
                      validators)
 
 
 class MailForm(FlaskForm):
-    recepient = StringField(u'Recepient:', [validators.required()])
+    recepient = SelectField(u'Recepient:', [validators.required()])
     subject = StringField(u'Subject:', [validators.required()])
     text = TextAreaField(u'Text:', [validators.required()])
 

@@ -78,6 +78,10 @@ class MailView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def mail_page(self):
         mail_form = forms.MailForm()
+        mail_form.recepient.choices = [
+            (applicant.email, f'{applicant.name}, {applicant.email}')
+            for applicant in models.Applicant.query.all()
+        ]
         if mail_form.validate_on_submit():
             try:
                 _send_mail(recepient=mail_form.recepient,

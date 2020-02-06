@@ -19,7 +19,7 @@ admin.add_view(admin_views.UserModelView(models.User, models.db.session))
 admin.add_view(admin_views.GroupModelView(models.Group, models.db.session))
 admin.add_view(admin_views.ApplicantsModelView(models.Applicant,
                                                models.db.session))
-admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='/mail'))
+admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='mail'))
 
 
 from stepik_p3.views import *  # TODO use blueprints
