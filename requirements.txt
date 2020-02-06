@@ -7,3 +7,4 @@ wtforms~=2.2.1
 flask-admin~=1.5.4
 Flask-Mail~=0.9.1
 flask-login~=0.4.1
+sqlalchemy-utils~=0.36.1
