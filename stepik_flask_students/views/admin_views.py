@@ -7,7 +7,7 @@ from flask_admin import AdminIndexView, BaseView, expose
 from flask_login import current_user
 from wtforms.fields import PasswordField
 
-from stepik_p3 import models, forms
+from stepik_flask_students import models, forms
 
 APPLICANTS_SHOW_AMOUNT = 10
 GROUPS_SHOW_AMOUNT = 10

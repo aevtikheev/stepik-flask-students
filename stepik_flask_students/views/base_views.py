@@ -1,8 +1,8 @@
 from flask import render_template, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user
 
-from stepik_p3.app import app, login_manager
-from stepik_p3 import forms, models
+from stepik_flask_students.app import app, login_manager
+from stepik_flask_students import forms, models
 
 
 @login_manager.user_loader

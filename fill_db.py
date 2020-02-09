@@ -7,8 +7,8 @@ import logging
 
 import faker
 
-from stepik_p3.app import app
-from stepik_p3 import models
+from stepik_flask_students.app import app
+from stepik_flask_students import models
 
 USER_AMOUNT = 3
 APPLICANTS_AMOUNT = 10

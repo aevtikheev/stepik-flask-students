@@ -15,7 +15,7 @@ def load_requirements(fname):
 
 
 setup(
-    name="stepik_p3",
+    name="stepik_flask_students",
     version="0.0.1",
     description="Stepik flask project 3",
     packages=find_packages(),
