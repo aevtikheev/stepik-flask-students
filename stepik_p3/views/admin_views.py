@@ -15,8 +15,8 @@ GROUPS_SHOW_AMOUNT = 10
 mail = flask_mail.Mail()
 
 
-class ProtectedModelView(sqla.ModelView):
-    """ Base Model view for authorization-requiring pages """
+class AuthorizationMixIn:
+    """ Makes view to require authorization """
 
     def is_accessible(self):
         return current_user.is_authenticated
@@ -25,23 +25,23 @@ class ProtectedModelView(sqla.ModelView):
         return redirect(url_for('login_page'))
 
 
-class UserModelView(ProtectedModelView):
+class UserModelView(AuthorizationMixIn, sqla.ModelView):
     """ Model view for users """
     column_searchable_list = ('name', 'email')
     column_exclude_list = ['password']
     form_overrides = dict(password=PasswordField)
 
 
-class GroupModelView(ProtectedModelView):
+class GroupModelView(AuthorizationMixIn, sqla.ModelView):
     """ Model view for groups """
     column_formatters = dict(course=lambda v, c, m, p: m.course.value)
 
 
-class ApplicantsModelView(ProtectedModelView):
+class ApplicantsModelView(AuthorizationMixIn, sqla.ModelView):
     """ Model view for applicants """
 
 
-class DashboardView(AdminIndexView):
+class DashboardView(AuthorizationMixIn, AdminIndexView):
     @expose('/')
     def index(self):
         total_applicants_count = (
@@ -66,14 +66,8 @@ class DashboardView(AdminIndexView):
                            new_applicants=new_applicants_to_show,
                            groups=groups)
 
-    def is_accessible(self):
-        return current_user.is_authenticated
 
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('login_page'))
-
-
-class MailView(BaseView):
+class MailView(AuthorizationMixIn, BaseView):
     @expose('/', methods=['GET', 'POST'])
     def mail_page(self):
         mail_form = forms.MailForm()
@@ -92,12 +86,6 @@ class MailView(BaseView):
             else:
                 flash('Mail sent', category='success')
         return self.render("admin/mail.html", mail_form=mail_form)
-
-    def is_accessible(self):
-        return current_user.is_authenticated
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(url_for('login_page'))
 
 
 def _send_mail(recepient, subject, text):

@@ -2,7 +2,8 @@ from flask import Flask
 from flask_admin import Admin
 from flask_login import LoginManager
 
-from stepik_p3 import models, config, admin_views
+from stepik_p3 import models, config
+from stepik_p3.views import admin_views
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
@@ -17,12 +18,11 @@ admin = Admin(app,
               index_view=admin_views.DashboardView())
 admin.add_view(admin_views.UserModelView(models.User, models.db.session))
 admin.add_view(admin_views.GroupModelView(models.Group, models.db.session))
-admin.add_view(admin_views.ApplicantsModelView(models.Applicant,
-                                               models.db.session))
+admin.add_view(admin_views.ApplicantsModelView(models.Applicant, models.db.session))
 admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='mail'))
 
 
-from stepik_p3.views import *  # TODO use blueprints
+from stepik_p3.views.base_views import *  # TODO maybe blueprints?
 
 if __name__ == '__main__':
     app.run()

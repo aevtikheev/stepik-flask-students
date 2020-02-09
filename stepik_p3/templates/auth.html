@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <title>Authorisation | Touradmin</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-
 <body>
   <main class="container">
     <div class="row">
@@ -24,7 +22,6 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
           <div class="form-label-group">
             <p class="text-muted">Электропочта</p>
             {{ login_form.email(class="form-control") }}
@@ -35,7 +32,6 @@
           </div>
           <div class="checkbox mb-3"> </div>
           {{ login_form.submit(class="btn btn-lg btn-primary btn-block") }}
-
             {% if login_form.errors %}
             {{ login_form.errors }}
             {% endif %}
