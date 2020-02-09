@@ -68,7 +68,7 @@ class DashboardView(AuthorizationMixIn, AdminIndexView):
 
 
 class MailView(AuthorizationMixIn, BaseView):
-    @expose('/', methods=['GET', 'POST'])
+    @expose('/')
     def mail_page(self):
         mail_form = forms.MailForm()
         mail_form.recepient.choices = [
