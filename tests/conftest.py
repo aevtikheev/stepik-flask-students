@@ -4,12 +4,14 @@ import random
 
 import pytest
 
-from stepik_p3.app import app
-from stepik_p3 import models
+from stepik_flask_students.app import create_app
+from stepik_flask_students import models
 
 TEST_USER = {'email': 'test@email.com',
              'password': '123',
              'name' : 'test_user_name'}
+
+app = create_app()
 
 
 @pytest.fixture(scope='session')
