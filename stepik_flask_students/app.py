@@ -7,6 +7,7 @@ from stepik_flask_students.views import admin_views
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
+app.url_map.strict_slashes = False
 models.db.init_app(app)
 
 login_manager = LoginManager()

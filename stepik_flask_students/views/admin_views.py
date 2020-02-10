@@ -2,6 +2,7 @@ import threading
 
 import flask_mail
 from flask import redirect, url_for, flash
+from flask import current_app
 from flask_admin.contrib import sqla
 from flask_admin import AdminIndexView, BaseView, expose
 from flask_login import current_user
@@ -28,7 +29,7 @@ class AuthorizationMixIn:
 class UserModelView(AuthorizationMixIn, sqla.ModelView):
     """ Model view for users """
     column_searchable_list = ('name', 'email')
-    column_exclude_list = ['password']
+    column_exclude_list = ('password', )
     form_overrides = dict(password=PasswordField)
 
 
@@ -68,7 +69,7 @@ class DashboardView(AuthorizationMixIn, AdminIndexView):
 
 
 class MailView(AuthorizationMixIn, BaseView):
-    @expose('/')
+    @expose('/', methods=['GET', 'POST'])
     def mail_page(self):
         mail_form = forms.MailForm()
         mail_form.recepient.choices = [
@@ -81,7 +82,7 @@ class MailView(AuthorizationMixIn, BaseView):
                            subject=mail_form.subject,
                            text=mail_form.text)
             except Exception as exc:
-                print(exc)  # TODO: logging
+                current_app.logger.exception(exc)
                 flash('Mail wasn\'n sent', category='error')
             else:
                 flash('Mail sent', category='success')
