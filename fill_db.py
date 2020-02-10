@@ -7,7 +7,7 @@ import logging
 
 import faker
 
-from stepik_flask_students.app import app
+from stepik_flask_students.app import create_app
 from stepik_flask_students import models
 
 USER_AMOUNT = 3
@@ -69,6 +69,7 @@ def _create_applicants(amount, available_group_ids):
 
 
 if __name__ == '__main__':
+    app = create_app()
     with app.app_context():
         models.db.create_all()
         _create_users(USER_AMOUNT)
