@@ -1,29 +1,28 @@
 from flask import Flask
 from flask_admin import Admin
-from flask_login import LoginManager
 
 from stepik_flask_students import models, config
 from stepik_flask_students.views import admin_views
-
-app = Flask(__name__)
-app.config.from_object(config.Config)
-app.url_map.strict_slashes = False
-models.db.init_app(app)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-admin_views.mail.init_app(app)
-
-admin = Admin(app,
-              template_mode='bootstrap3',
-              index_view=admin_views.DashboardView())
-admin.add_view(admin_views.UserModelView(models.User, models.db.session))
-admin.add_view(admin_views.GroupModelView(models.Group, models.db.session))
-admin.add_view(admin_views.ApplicantsModelView(models.Applicant, models.db.session))
-admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='mail'))
+from stepik_flask_students.views.base_views import login_manager, auth_page
 
 
-from stepik_flask_students.views.base_views import *  # TODO maybe blueprints?
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(config.Config)
+    app.url_map.strict_slashes = False
+    models.db.init_app(app)
 
-if __name__ == '__main__':
-    app.run()
+    login_manager.init_app(app)
+    admin_views.mail.init_app(app)
+
+    admin = Admin(app,
+                  template_mode='bootstrap3',
+                  index_view=admin_views.DashboardView())
+    admin.add_view(admin_views.UserModelView(models.User, models.db.session))
+    admin.add_view(admin_views.GroupModelView(models.Group, models.db.session))
+    admin.add_view(admin_views.ApplicantsModelView(models.Applicant, models.db.session))
+    admin.add_view(admin_views.MailView(name="Send e-mail", endpoint='mail'))
+
+    app.register_blueprint(auth_page)
+
+    return app
