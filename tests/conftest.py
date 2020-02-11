@@ -11,39 +11,31 @@ TEST_USER = {'email': 'test@email.com',
              'password': '123',
              'name' : 'test_user_name'}
 
-app = create_app()
-
 
 @pytest.fixture(scope='session')
 def client(application):
-    with app.test_client() as client:
+    with application.test_client() as client:
         yield client
 
 
 @pytest.fixture(scope='session')
-def application(db):
+def application():
+    app = create_app()
     app.config['WTF_CSRF_ENABLED'] = False
     app.config['TESTING'] = True
-
-
-@pytest.fixture(scope='session')
-def db():
-    """ Create DB and fill it with test data """
-
     db_fd, app.config['DATABASE'] = tempfile.mkstemp()
 
-    #  TODO: clear database
     with app.app_context():
         models.db.create_all()
-        _create_user(TEST_USER)
-    yield
+    yield app
 
     os.close(db_fd)
     os.unlink(app.config['DATABASE'])
 
 
 @pytest.fixture(scope='session')
-def user(db):
+def user(application):
+    _create_user(TEST_USER)
     return TEST_USER
 
 
